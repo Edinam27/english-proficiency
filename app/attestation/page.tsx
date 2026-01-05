@@ -34,7 +34,7 @@ export default function AttestationRequest() {
     reset,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       gender: 'MALE',
       programme: PROGRAMMES[0],
