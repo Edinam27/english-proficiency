@@ -52,7 +52,6 @@ export default function AttestationRequest() {
         letterType: 'ATTESTATION',
         // Default values
         completionMonth: 'August', 
-        duration: 2,
       };
 
       const response = await fetch('/api/students', {
