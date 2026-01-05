@@ -15,7 +15,7 @@ const formSchema = z.object({
   gender: z.enum(['MALE', 'FEMALE']),
   programme: z.string().min(1, 'Programme is required'),
   completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'),
-  duration: z.coerce.number().min(1).max(5).optional(),
+  duration: z.preprocess((val) => Number(val), z.number().min(1).max(5)).optional(),
   graduationDate: z.string().min(1, 'Graduation date is required'),
   certificateNumber: z.string().min(1, 'Certificate number is required'),
 });
