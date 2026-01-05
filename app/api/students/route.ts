@@ -12,7 +12,7 @@ const studentSchema = z.object({
   
   // Defaults and Optionals
   completionMonth: z.string().default('August'),
-  completionYear: z.string().optional(),
+  completionYear: z.string().default(new Date().getFullYear().toString()),
   duration: z.number().default(2),
   addressee: z.string().optional(),
   
