@@ -18,8 +18,12 @@ export default async function GeneratePage({
   let error = null;
 
   try {
+    const studentId = parseInt(id);
+    if (isNaN(studentId)) {
+      throw new Error("Invalid student ID");
+    }
     student = await prisma.student.findUnique({
-      where: { indexNumber: id },
+      where: { id: studentId },
     });
   } catch (e) {
     console.error(e);
