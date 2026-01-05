@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UPSA English Proficiency Letter Generator
 
-## Getting Started
+This is a Next.js application designed to automate the creation of English proficiency letters for the UPSA School of Graduate Studies (Masters Programmes).
 
-First, run the development server:
+## Features
+- **Student Data Form**: Captures Name, Index Number, Programme, Completion Date, etc.
+- **Database Persistence**: Stores student records in a Neon (PostgreSQL) database using Prisma.
+- **PDF Generation**: Generates a downloadable PDF letter formatted exactly according to UPSA standards (Times New Roman, 13pt, official letterhead spacing).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Prerequisites
+- Node.js (v18 or higher recommended)
+- A Neon (PostgreSQL) database account
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Configure Database**
+    - Create a project in [Neon](https://neon.tech/).
+    - Copy your connection string.
+    - Open the `.env` file in the root directory.
+    - Replace the placeholder `DATABASE_URL` with your actual Neon connection string.
 
-## Learn More
+    ```env
+    DATABASE_URL="postgresql://user:password@your-neon-host/neondb?sslmode=require"
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3.  **Push Schema to Database**
+    Run the following command to create the tables in your Neon database:
+    ```bash
+    npx prisma db push
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  **Run the Development Server**
+    ```bash
+    npm run dev
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5.  **Access the Application**
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## Usage
+1.  Fill out the student details form.
+2.  Click "Generate Letter".
+3.  You will be redirected to a preview page where you can view and download the PDF.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+- `app/page.tsx`: Main entry point with the student form.
+- `app/api/students`: API routes for saving student data.
+- `components/LetterPDF.tsx`: The PDF template definition.
+- `prisma/schema.prisma`: Database schema definition.

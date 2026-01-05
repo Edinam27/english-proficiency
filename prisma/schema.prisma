@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id              Int          @id @default(autoincrement())
+  firstName       String
+  otherNames      String?
+  lastName        String
+  indexNumber     String
+  gender          Gender
+  completionMonth String       @default("August")
+  completionYear  String
+  programme       String
+  duration        Int          @default(2)
+  addressee       String       @default("TO WHOM IT MAY CONCERN")
+  signatory       String       @default("DENIS_ATTUQUAYEFIO")
+  status          LetterStatus @default(PENDING)
+  letterType      LetterType   @default(PROFICIENCY)
+  
+  // Introductory Letter Fields
+  admissionYear   String?
+  currentLevel    String?
+  purpose         String?
+  
+  // Attestation Letter Fields
+  graduationDate  String?
+  certificateNumber String?
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([indexNumber])
+}
+
+model Officer {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum LetterStatus {
+  PENDING
+  PRINTED
+}
+
+enum LetterType {
+  PROFICIENCY
+  INTRODUCTORY
+  ATTESTATION
+}
