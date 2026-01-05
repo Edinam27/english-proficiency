@@ -15,7 +15,7 @@ const formSchema = z.object({
   gender: z.enum(['MALE', 'FEMALE']),
   programme: z.string().min(1, 'Programme is required'),
   completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'),
-  duration: z.preprocess((val) => Number(val), z.number().min(1).max(5)).optional(),
+  duration: z.coerce.number().min(1).max(5).optional(),
   graduationDate: z.string().min(1, 'Graduation date is required'),
   certificateNumber: z.string().min(1, 'Certificate number is required'),
 });
@@ -101,27 +101,7 @@ export default function AttestationRequest() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
-                Duration (Years)
-              </label>
-              <select
-                id="duration"
-                {...register('duration')}
-                className="mt-1 block w-full border border-gray-400 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-white"
-              >
-                {[1, 2, 3, 4, 5].map((year) => (
-                  <option key={year} value={year}>
-                    {year} Year{year > 1 ? 's' : ''}
-                  </option>
-                ))}
-              </select>
-              {errors.duration && (
-                <p className="mt-2 text-sm text-red-600">{errors.duration.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="graduationDate" className="block text-sm font-medium text-gray-700">First Name</label>
+              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
               <input
                 {...register('firstName')}
                 type="text"
