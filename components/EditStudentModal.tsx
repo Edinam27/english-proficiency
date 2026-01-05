@@ -47,7 +47,7 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       firstName: student.firstName,
       otherNames: student.otherNames || '',

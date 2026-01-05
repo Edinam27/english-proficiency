@@ -14,6 +14,7 @@ const formSchema = z.object({
   indexNumber: z.string().min(1, 'Index number is required'),
   gender: z.enum(['MALE', 'FEMALE']),
   programme: z.string().min(1, 'Programme is required'),
+  addressee: z.string().min(1, 'Address To is required'),
   admissionYear: z.string().min(1, 'Admission year is required'),
   currentLevel: z.string().min(1, 'Current level is required'),
   purpose: z.string().min(1, 'Purpose is required'),
