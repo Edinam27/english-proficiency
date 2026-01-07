@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     fontFamily: 'Times-Roman',
     fontSize: 12,
+    hyphenation: false,
   },
   signatureSection: {
     marginTop: 50,

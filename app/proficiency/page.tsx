@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { PROGRAMMES } from '@/lib/constants';
+import { PROGRAMMES, getProgrammeDuration } from '@/lib/constants';
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -16,7 +16,7 @@ const formSchema = z.object({
   completionMonth: z.string().min(1),
   completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'),
   programme: z.string().min(1, 'Programme is required'),
-  duration: z.string(),
+  duration: z.coerce.number().min(1).max(5),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -31,16 +31,27 @@ export default function ProficiencyRequest() {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       completionMonth: 'August',
-      duration: '2',
+      duration: 2,
       gender: 'MALE',
       programme: PROGRAMMES[0],
     },
   });
+
+  const selectedProgramme = watch('programme');
+
+  React.useEffect(() => {
+    if (selectedProgramme) {
+      const duration = getProgrammeDuration(selectedProgramme);
+      setValue('duration', duration);
+    }
+  }, [selectedProgramme, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -49,7 +60,7 @@ export default function ProficiencyRequest() {
     try {
       const payload = {
         ...data,
-        duration: parseInt(data.duration, 10),
+        duration: data.duration, // Already a number
         letterType: 'PROFICIENCY',
       };
 

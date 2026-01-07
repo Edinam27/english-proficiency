@@ -32,6 +32,20 @@ export const PROGRAMMES = [
   'Laws (LLM) in Natural Resources and Climate Change Law',
 ];
 
+export const getProgrammeDuration = (programme: string): number => {
+  const lower = programme.toLowerCase();
+  // MBA (Business Administration) and MPHIL (Philosophy) are 2 years
+  if (lower.includes('philosophy') || lower.includes('business administration')) {
+    return 2;
+  }
+  // LLM, MA (Arts), MSc (Science) are 1 year
+  if (lower.includes('laws') || lower.includes('arts') || lower.includes('science')) {
+    return 1;
+  }
+  // Default to 1 year if unknown, or keep previous default
+  return 1;
+};
+
 export const SIGNATORIES = [
   { 
     id: 'DENIS_ATTUQUAYEFIO', 

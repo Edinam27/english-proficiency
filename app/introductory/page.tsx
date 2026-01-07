@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { PROGRAMMES } from '@/lib/constants';
+import { PROGRAMMES, getProgrammeDuration } from '@/lib/constants';
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -18,7 +18,7 @@ const formSchema = z.object({
   admissionYear: z.string().min(1, 'Admission year is required'),
   currentLevel: z.string().min(1, 'Current level is required'),
   purpose: z.string().min(1, 'Purpose is required'),
-  completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'), // Required by DB schema
+  completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits').optional(), // Optional on form but handled in submit
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -33,26 +33,31 @@ export default function IntroductoryRequest() {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as any,
     defaultValues: {
       gender: 'MALE',
       programme: PROGRAMMES[0],
     },
   });
 
+  const selectedProgramme = watch('programme');
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setError(null);
     setSuccess(null);
     try {
+      const duration = getProgrammeDuration(data.programme);
       const payload = {
         ...data,
         letterType: 'INTRODUCTORY',
         // Default values for fields not in this form but required by schema or logic
         completionMonth: 'August', 
-        duration: 2, 
+        completionYear: new Date().getFullYear().toString(), // Default if not provided
+        duration: duration, 
       };
 
       const response = await fetch('/api/students', {

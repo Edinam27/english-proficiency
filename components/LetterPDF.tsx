@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
     textAlign: 'justify',
     fontFamily: 'Times-Roman',
     fontSize: 13,
+    hyphenation: false,
   },
   signatureSection: {
     marginTop: 50,

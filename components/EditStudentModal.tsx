@@ -5,7 +5,7 @@ import { Student } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { PROGRAMMES, SIGNATORIES } from '@/lib/constants';
+import { PROGRAMMES, SIGNATORIES, getProgrammeDuration } from '@/lib/constants';
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -45,6 +45,8 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema) as any,
@@ -67,6 +69,15 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
       certificateNumber: student.certificateNumber || '',
     },
   });
+
+  const selectedProgramme = watch('programme');
+
+  React.useEffect(() => {
+    if (selectedProgramme) {
+      const duration = getProgrammeDuration(selectedProgramme);
+      setValue('duration', duration);
+    }
+  }, [selectedProgramme, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
