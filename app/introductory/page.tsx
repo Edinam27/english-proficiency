@@ -40,6 +40,7 @@ export default function IntroductoryRequest() {
     defaultValues: {
       gender: 'MALE',
       programme: PROGRAMMES[0],
+      addressee: "THE CONSULAR SECTION\nEMBASSY OF UNITED KINGDOM\nUK Visa and Immigration\nHome Office\nACCRA-GHANA",
     },
   });
 
@@ -157,9 +158,9 @@ export default function IntroductoryRequest() {
 
             <div className="sm:col-span-2">
               <label htmlFor="addressee" className="block text-sm font-medium text-gray-700">Address To (e.g. The Consular Section, US Embassy)</label>
-              <input
+              <textarea
                 {...register('addressee')}
-                type="text"
+                rows={6}
                 placeholder="e.g. The Consular Section, Embassy of the United States, Accra"
                 className="mt-1 block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 text-gray-900 bg-white"
               />

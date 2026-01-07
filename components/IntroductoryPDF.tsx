@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     fontFamily: 'Times-Bold',
-    textTransform: 'uppercase',
   },
   title: {
     fontFamily: 'Times-Bold',
