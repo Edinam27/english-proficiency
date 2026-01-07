@@ -84,7 +84,8 @@ export const LetterPage = ({ student }: { student: Student }) => {
   
   // Calculate Start Year
   const endYearInt = parseInt(completionYear, 10);
-  const startYear = isNaN(endYearInt) ? 'UNKNOWN' : (endYearInt - duration).toString();
+  // Use explicit admissionYear if available, otherwise fallback to calculation
+  const startYear = student.admissionYear || (isNaN(endYearInt) ? 'UNKNOWN' : (endYearInt - duration).toString());
   
   // Current Date
   const today = new Date();

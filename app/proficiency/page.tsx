@@ -15,6 +15,7 @@ const formSchema = z.object({
   gender: z.enum(['MALE', 'FEMALE']),
   completionMonth: z.string().min(1),
   completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'),
+  admissionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits').min(1, 'Admission year is required'),
   programme: z.string().min(1, 'Programme is required'),
   duration: z.coerce.number().min(1).max(5),
 });
@@ -172,7 +173,18 @@ export default function ProficiencyRequest() {
             </div>
 
             <div>
-              <label htmlFor="completionYear" className="block text-sm font-medium text-gray-700">Completion Year</label>
+              <label htmlFor="admissionYear" className="block text-sm font-medium text-gray-700">Year Started</label>
+              <input
+                {...register('admissionYear')}
+                type="text"
+                placeholder="2023"
+                className="mt-1 block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 text-gray-900 bg-white"
+              />
+              {errors.admissionYear && <p className="mt-1 text-sm text-red-600">{errors.admissionYear.message}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="completionYear" className="block text-sm font-medium text-gray-700">Year Completed</label>
               <input
                 {...register('completionYear')}
                 type="text"

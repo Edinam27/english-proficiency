@@ -81,7 +81,8 @@ export const AttestationPage = ({ student }: { student: Student }) => {
 
   // Calculate Start Year logic
   const endYearInt = parseInt(completionYear, 10);
-  const startYear = isNaN(endYearInt) ? 'UNKNOWN' : (endYearInt - duration).toString();
+  // Use explicit admissionYear if available, otherwise fallback to calculation
+  const startYear = student.admissionYear || (isNaN(endYearInt) ? 'UNKNOWN' : (endYearInt - duration).toString());
 
   const today = new Date();
   const getOrdinal = (n: number) => {

@@ -59,9 +59,9 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
       signatory: student.signatory || 'DENIS_ATTUQUAYEFIO',
       
       completionYear: student.completionYear || '',
+      admissionYear: student.admissionYear || '',
       duration: student.duration || 2,
       
-      admissionYear: student.admissionYear || '',
       currentLevel: student.currentLevel || '',
       purpose: student.purpose || '',
       
@@ -185,7 +185,17 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
             {(letterType === 'PROFICIENCY' || letterType === 'ATTESTATION') && (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Completion Year</label>
+                  <label className="block text-sm font-medium text-gray-700">Year Started</label>
+                  <input
+                    {...register('admissionYear')}
+                    placeholder="YYYY"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2"
+                  />
+                  {errors.admissionYear && <p className="text-red-500 text-xs mt-1">{errors.admissionYear.message}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Year Completed</label>
                   <input
                     {...register('completionYear')}
                     placeholder="YYYY"
