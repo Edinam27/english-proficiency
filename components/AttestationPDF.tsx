@@ -29,11 +29,22 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Times-Bold',
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: 'left',
     textDecoration: 'underline',
-    marginBottom: 20,
+    marginBottom: 5,
     marginTop: 20,
     textTransform: 'uppercase',
+    hyphenation: false,
+  },
+  subtitle: {
+    fontFamily: 'Times-Bold',
+    fontSize: 12,
+    textAlign: 'left',
+    textDecoration: 'underline',
+    marginBottom: 20,
+    marginTop: 5,
+    textTransform: 'uppercase',
+    hyphenation: false,
   },
   bodyText: {
     marginBottom: 15,
@@ -114,7 +125,10 @@ export const AttestationPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.title}>
-        ATTESTATION: {titleHeader} {fullName.toUpperCase()} (STUDENT ID NO: {indexNumber})
+        ATTESTATION
+      </Text>
+      <Text style={styles.subtitle}>
+        RE: {titleHeader} {fullName.toUpperCase()} (STUDENT ID NO: {indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>

@@ -35,11 +35,12 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Times-Bold',
     fontSize: 12,
-    textAlign: 'center',
+    textAlign: 'left',
     textDecoration: 'underline',
     marginBottom: 20,
     marginTop: 10,
     textTransform: 'uppercase',
+    hyphenation: false,
   },
   bodyText: {
     marginBottom: 15,
