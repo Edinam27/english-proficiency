@@ -118,7 +118,7 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>
 
       <Text style={styles.title}>
-        LETTER OF INTRODUCTION IN RESPECT OF {titleHeader} {fullName.toUpperCase()} (ID: {indexNumber})
+        LETTER OF INTRODUCTION IN RESPECT OF {titleHeader} {fullName.toUpperCase()} (ID:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>

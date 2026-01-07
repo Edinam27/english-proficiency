@@ -128,7 +128,7 @@ export const AttestationPage = ({ student }: { student: Student }) => {
         ATTESTATION
       </Text>
       <Text style={styles.subtitle}>
-        RE: {titleHeader} {fullName.toUpperCase()} (STUDENT ID NO: {indexNumber})
+        RE: {titleHeader} {fullName.toUpperCase()} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
