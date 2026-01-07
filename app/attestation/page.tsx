@@ -16,7 +16,6 @@ const formSchema = z.object({
   programme: z.string().min(1, 'Programme is required'),
   completionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits'),
   admissionYear: z.string().regex(/^\d{4}$/, 'Year must be 4 digits').min(1, 'Admission year is required'),
-  duration: z.coerce.number().min(1).max(5).optional(),
   graduationDate: z.string().min(1, 'Graduation date is required'),
   certificateNumber: z.string().min(1, 'Certificate number is required'),
 });
@@ -41,18 +40,10 @@ export default function AttestationRequest() {
     defaultValues: {
       gender: 'MALE',
       programme: PROGRAMMES[0],
-      duration: 2,
     },
   });
 
   const selectedProgramme = watch('programme');
-
-  React.useEffect(() => {
-    if (selectedProgramme) {
-      const duration = getProgrammeDuration(selectedProgramme);
-      setValue('duration', duration);
-    }
-  }, [selectedProgramme, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -181,21 +172,6 @@ export default function AttestationRequest() {
                 className="mt-1 block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 text-gray-900 bg-white"
               />
               {errors.completionYear && <p className="mt-1 text-sm text-red-600">{errors.completionYear.message}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
-                Duration (Years)
-              </label>
-              <input
-                id="duration"
-                {...register('duration')}
-                readOnly
-                className="mt-1 block w-full border border-gray-400 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-gray-100 cursor-not-allowed"
-              />
-              {errors.duration && (
-                <p className="mt-2 text-sm text-red-600">{errors.duration.message}</p>
-              )}
             </div>
 
             <div>

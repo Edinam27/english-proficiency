@@ -17,7 +17,6 @@ const formSchema = z.object({
   
   // Proficiency fields
   completionYear: z.string().optional(),
-  duration: z.coerce.number().min(1).max(5).optional(),
   
   // Introductory fields
   admissionYear: z.string().optional(),
@@ -60,7 +59,6 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
       
       completionYear: student.completionYear || '',
       admissionYear: student.admissionYear || '',
-      duration: student.duration || 2,
       
       currentLevel: student.currentLevel || '',
       purpose: student.purpose || '',
@@ -72,25 +70,25 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
 
   const selectedProgramme = watch('programme');
 
-  React.useEffect(() => {
-    if (selectedProgramme) {
-      const duration = getProgrammeDuration(selectedProgramme);
-      setValue('duration', duration);
-    }
-  }, [selectedProgramme, setValue]);
-
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setError(null);
 
     try {
+      // Calculate duration based on programme
+      const duration = getProgrammeDuration(data.programme);
+      const payload = {
+        ...data,
+        duration,
+      };
+
       // Use student.id instead of indexNumber
       const response = await fetch(`/api/students/${student.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -202,15 +200,6 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2"
                   />
                   {errors.completionYear && <p className="text-red-500 text-xs mt-1">{errors.completionYear.message}</p>}
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Duration (Years)</label>
-                  <input
-                    {...register('duration')}
-                    readOnly
-                    className="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 cursor-not-allowed"
-                  />
                 </div>
               </>
             )}
