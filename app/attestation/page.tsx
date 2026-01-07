@@ -175,17 +175,12 @@ export default function AttestationRequest() {
               <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
                 Duration (Years)
               </label>
-              <select
+              <input
                 id="duration"
                 {...register('duration')}
-                className="mt-1 block w-full border border-gray-400 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-white"
-              >
-                {[1, 2, 3, 4, 5].map((year) => (
-                  <option key={year} value={year}>
-                    {year} Year{year > 1 ? 's' : ''}
-                  </option>
-                ))}
-              </select>
+                readOnly
+                className="mt-1 block w-full border border-gray-400 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 bg-gray-100 cursor-not-allowed"
+              />
               {errors.duration && (
                 <p className="mt-2 text-sm text-red-600">{errors.duration.message}</p>
               )}
