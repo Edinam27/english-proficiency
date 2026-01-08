@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
     marginBottom: 20,
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     fontSize: 12,
     alignItems: 'flex-start',
   },
@@ -118,7 +118,7 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>
 
       <Text style={styles.title}>
-        LETTER OF INTRODUCTION IN RESPECT OF {titleHeader} {fullName.toUpperCase()}{'\n'}(ID:{'\u00A0'}{indexNumber})
+        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName.toUpperCase()} (ID:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
@@ -139,6 +139,10 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
 
       <Text style={styles.bodyText}>
         Thank you.
+      </Text>
+
+      <Text style={styles.bodyText}>
+        Yours Sincerely,
       </Text>
 
       <View style={styles.signatureSection}>

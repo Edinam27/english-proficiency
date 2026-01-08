@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
     marginBottom: 20,
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     fontSize: 13,
     alignItems: 'flex-start',
   },
@@ -121,7 +121,7 @@ export const LetterPage = ({ student }: { student: Student }) => {
 
         {/* Title */}
         <Text style={styles.title}>
-          ENGLISH PROFICIENCY CERTIFICATE IN RESPECT OF {titleHeader} {fullName} (STUDENT ID NO: {indexNumber})
+          ENGLISH PROFICIENCY CERTIFICATE IN RESPECT OF{'\n'}{titleHeader} {fullName} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
         </Text>
 
         {/* Body Paragraph 1 */}
@@ -137,6 +137,10 @@ export const LetterPage = ({ student }: { student: Student }) => {
         {/* Body Paragraph 3 */}
         <Text style={styles.bodyText}>
           As such, {titleBody} {lastName}, possesses the necessary aptitude to meet any English Language proficiency requirements set by your institution.
+        </Text>
+
+        <Text style={styles.bodyText}>
+          Yours Sincerely,
         </Text>
 
         {/* Signature */}

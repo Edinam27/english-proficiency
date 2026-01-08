@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
     marginBottom: 20,
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     fontSize: 12,
     alignItems: 'flex-start',
   },
@@ -126,10 +126,8 @@ export const AttestationPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.title}>
-        ATTESTATION
-      </Text>
-      <Text style={styles.subtitle}>
-        RE: {titleHeader} {fullName.toUpperCase()} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
+        LETTER OF ATTESTATION IN RESPECT OF{'\n'}
+        {titleHeader} {fullName.toUpperCase()} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
@@ -153,7 +151,7 @@ export const AttestationPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.bodyText}>
-        Yours sincerely,
+        Yours Sincerely,
       </Text>
 
       <View style={styles.signatureSection}>
