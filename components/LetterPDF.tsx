@@ -126,7 +126,11 @@ export const LetterPage = ({ student }: { student: Student }) => {
 
         {/* Body Paragraph 1 */}
         <Text style={styles.bodyText}>
-          This is to certify that {titleBody} {firstName} {otherNames} {lastName} was a bona fide student of the University of Professional Studies, Accra (UPSA) from {completionMonth} {startYear} to {completionMonth} {completionYear}. The official language and medium of instruction in all schools in Ghana is English. Therefore, {titleBody} {lastName} received all {pronounPossessive} instruction in English during {pronounPossessive} studies at UPSA.
+          This is to certify that {titleBody} {firstName} {otherNames} {lastName} was a bona fide student of the University of Professional Studies, Accra (UPSA) from {completionMonth} {startYear} to {completionMonth} {completionYear}.
+        </Text>
+
+        <Text style={styles.bodyText}>
+          The official language and medium of instruction in all schools in Ghana is English. Therefore, {titleBody} {lastName} received all {pronounPossessive} instruction in English during {pronounPossessive} studies at UPSA.
         </Text>
 
         {/* Body Paragraph 2 */}
