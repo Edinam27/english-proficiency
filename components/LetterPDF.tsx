@@ -77,7 +77,8 @@ export const LetterPage = ({ student }: { student: Student }) => {
 
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES[0];
 
-  const fullName = `${firstName} ${otherNames ? otherNames + ' ' : ''}${lastName}`.toUpperCase();
+  const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
+  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`.toUpperCase();
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounPossessive = gender === 'MALE' ? 'his' : 'her';

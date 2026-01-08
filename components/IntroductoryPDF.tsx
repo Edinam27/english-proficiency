@@ -79,7 +79,8 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
   // Default to Leticia if not specified
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES.find(s => s.id === 'LETICIA_AKYEAMPONG') || SIGNATORIES[0];
 
-  const fullName = `${firstName} ${otherNames ? otherNames + ' ' : ''}${lastName}`;
+  const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
+  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`;
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounSubject = gender === 'MALE' ? 'He' : 'She';
