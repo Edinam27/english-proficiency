@@ -54,11 +54,11 @@ const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 30,
+    marginTop: 20,
   },
   signatureName: {
     fontFamily: 'Times-Roman',
-    marginTop: 40,
+    marginTop: 10,
   },
   signatureTitle: {
     fontFamily: 'Times-Bold',
@@ -83,8 +83,14 @@ export const AttestationPage = ({ student }: { student: Student }) => {
 
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES.find(s => s.id === 'ANTHONY_AFEADIE') || SIGNATORIES[0];
 
+  const toTitleCase = (str: string) => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
+  const formatBodyName = (name: string | undefined | null) => formatName(toTitleCase(name || ''));
+  
   const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`;
+  const fullNameBody = `${formatBodyName(firstName)} ${otherNames ? formatBodyName(otherNames) + ' ' : ''}${formatBodyName(lastName)}`;
+  const lastNameBody = formatBodyName(lastName);
+
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounSubject = gender === 'MALE' ? 'He' : 'She';
@@ -127,11 +133,11 @@ export const AttestationPage = ({ student }: { student: Student }) => {
 
       <Text style={styles.title}>
         LETTER OF ATTESTATION IN RESPECT OF{'\n'}
-        {titleHeader} {fullName} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
+        {titleHeader} {fullName.toUpperCase()} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
-        This is to certify that {titleBody} {fullName} was a bona fide student of the University of Professional Studies, Accra from {completionMonth} {startYear} to {completionMonth} {completionYear}.
+        This is to certify that {titleBody} {fullNameBody} was a bona fide student of the University of Professional Studies, Accra from {completionMonth} {startYear} to {completionMonth} {completionYear}.
       </Text>
 
       <Text style={styles.bodyText}>
@@ -143,7 +149,7 @@ export const AttestationPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.bodyText}>
-        {titleBody} {lastName} was consequently issued with a certificate number: {certificateNumber}.
+        {titleBody} {lastNameBody} was consequently issued with a certificate number: {certificateNumber}.
       </Text>
 
       <Text style={styles.bodyText}>

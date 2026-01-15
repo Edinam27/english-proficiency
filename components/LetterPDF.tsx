@@ -50,11 +50,11 @@ export const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 30,
+    marginTop: 20,
   },
   signatureName: {
     fontFamily: 'Times-Roman',
-    marginTop: 40, // Space for signature
+    marginTop: 10, // Reduced space
   },
   signatureTitle: {
     fontFamily: 'Times-Bold',
@@ -77,8 +77,17 @@ export const LetterPage = ({ student }: { student: Student }) => {
 
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES[0];
 
+  const toTitleCase = (str: string) => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
-  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`;
+  const formatBodyName = (name: string | undefined | null) => formatName(toTitleCase(name || ''));
+  
+  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`.toUpperCase();
+  
+  // Body names (Title Case)
+  const firstNameBody = formatBodyName(firstName);
+  const otherNamesBody = otherNames ? formatBodyName(otherNames) : '';
+  const lastNameBody = formatBodyName(lastName);
+
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounPossessive = gender === 'MALE' ? 'his' : 'her';
@@ -126,21 +135,21 @@ export const LetterPage = ({ student }: { student: Student }) => {
 
         {/* Body Paragraph 1 */}
         <Text style={styles.bodyText}>
-          This is to certify that {titleBody} {firstName} {otherNames} {lastName} was a bona fide student of the University of Professional Studies, Accra (UPSA) from {completionMonth} {startYear} to {completionMonth} {completionYear}.
+          This is to certify that {titleBody} {firstNameBody} {otherNamesBody ? otherNamesBody + ' ' : ''}{lastNameBody} was a bona fide student of the University of Professional Studies, Accra (UPSA) from {completionMonth} {startYear} to {completionMonth} {completionYear}.
         </Text>
 
         <Text style={styles.bodyText}>
-          The official language and medium of instruction in all schools in Ghana is English. Therefore, {titleBody} {lastName} received all {pronounPossessive} instruction in English during {pronounPossessive} studies at UPSA.
+          The official language and medium of instruction in all schools in Ghana is English. Therefore, {titleBody} {lastNameBody} received all {pronounPossessive} instruction in English during {pronounPossessive} studies at UPSA.
         </Text>
 
         {/* Body Paragraph 2 */}
         <Text style={styles.bodyText}>
-          All classes, assignments, oral and written examinations, seminars and extra-curricular activities that {titleBody} {lastName} participated in while pursuing {pronounPossessive} {duration}-Year Master of {programme} degree programme at UPSA were conducted in English.
+          All classes, assignments, oral and written examinations, seminars and extra-curricular activities that {titleBody} {lastNameBody} participated in while pursuing {pronounPossessive} {duration}-Year Master of {programme} degree programme at UPSA were conducted in English.
         </Text>
 
         {/* Body Paragraph 3 */}
         <Text style={styles.bodyText}>
-          As such, {titleBody} {lastName}, possesses the necessary aptitude to meet any English Language proficiency requirements set by your institution.
+          As such, {titleBody} {lastNameBody}, possesses the necessary aptitude to meet any English Language proficiency requirements set by your institution.
         </Text>
 
         <Text style={styles.bodyText}>

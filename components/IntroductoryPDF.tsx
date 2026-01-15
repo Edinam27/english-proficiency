@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 30,
+    marginTop: 20,
   },
   signatureName: {
     fontFamily: 'Times-Roman',
-    marginTop: 40,
+    marginTop: 10,
   },
   signatureTitle: {
     fontFamily: 'Times-Bold',
@@ -79,8 +79,14 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
   // Default to Leticia if not specified
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES.find(s => s.id === 'LETICIA_AKYEAMPONG') || SIGNATORIES[0];
 
+  const toTitleCase = (str: string) => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
+  const formatBodyName = (name: string | undefined | null) => formatName(toTitleCase(name || ''));
+  
   const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`;
+  const fullNameBody = `${formatBodyName(firstName)} ${otherNames ? formatBodyName(otherNames) + ' ' : ''}${formatBodyName(lastName)}`;
+  const lastNameBody = formatBodyName(lastName);
+
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounSubject = gender === 'MALE' ? 'He' : 'She';
@@ -118,15 +124,15 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>
 
       <Text style={styles.title}>
-        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName} (ID:{'\u00A0'}{indexNumber})
+        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName.toUpperCase()} (ID:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
-        This is to introduce to you {titleBody} {fullName}, a {currentLevel} student at the University of Professional Studies, Accra (UPSA), who is pursuing a Master of {programme} degree programme.
+        This is to introduce to you {titleBody} {fullNameBody}, a {currentLevel} student at the University of Professional Studies, Accra (UPSA), who is pursuing a Master of {programme} degree programme.
       </Text>
 
       <Text style={styles.bodyText}>
-        {titleBody} {lastName}, was admitted in {admissionYear} and will be completing in {completionYear}.
+        {titleBody} {lastNameBody}, was admitted in {admissionYear} and will be completing in {completionYear}.
       </Text>
 
       <Text style={styles.bodyText}>
