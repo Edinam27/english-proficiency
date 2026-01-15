@@ -49,14 +49,14 @@ const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 50,
+    marginTop: 30,
   },
   signatureName: {
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     marginTop: 40,
   },
   signatureTitle: {
-    fontFamily: 'Times-Roman',
+    fontFamily: 'Times-Bold',
   },
 });
 
@@ -118,7 +118,7 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>
 
       <Text style={styles.title}>
-        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName.toUpperCase()} (ID:{'\u00A0'}{indexNumber})
+        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName} (ID:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
@@ -142,7 +142,7 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.bodyText}>
-        Yours Sincerely,
+        Yours sincerely,
       </Text>
 
       <View style={styles.signatureSection}>

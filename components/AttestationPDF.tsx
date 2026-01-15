@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 50,
+    marginTop: 30,
   },
   signatureName: {
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     marginTop: 40,
   },
   signatureTitle: {
-    fontFamily: 'Times-Roman',
+    fontFamily: 'Times-Bold',
   },
 });
 
@@ -127,7 +127,7 @@ export const AttestationPage = ({ student }: { student: Student }) => {
 
       <Text style={styles.title}>
         LETTER OF ATTESTATION IN RESPECT OF{'\n'}
-        {titleHeader} {fullName.toUpperCase()} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
+        {titleHeader} {fullName} (STUDENT{'\u00A0'}ID{'\u00A0'}NO:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
@@ -151,7 +151,7 @@ export const AttestationPage = ({ student }: { student: Student }) => {
       </Text>
 
       <Text style={styles.bodyText}>
-        Yours Sincerely,
+        Yours sincerely,
       </Text>
 
       <View style={styles.signatureSection}>

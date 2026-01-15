@@ -50,14 +50,14 @@ export const styles = StyleSheet.create({
     hyphenation: false,
   },
   signatureSection: {
-    marginTop: 50,
+    marginTop: 30,
   },
   signatureName: {
-    fontFamily: 'Times-Bold',
+    fontFamily: 'Times-Roman',
     marginTop: 40, // Space for signature
   },
   signatureTitle: {
-    fontFamily: 'Times-Roman',
+    fontFamily: 'Times-Bold',
   },
 });
 
@@ -78,7 +78,7 @@ export const LetterPage = ({ student }: { student: Student }) => {
   const signatory = SIGNATORIES.find(s => s.id === signatoryId) || SIGNATORIES[0];
 
   const formatName = (name: string | undefined | null) => (name || '').trim().replace(/\s+/g, '\u00A0');
-  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`.toUpperCase();
+  const fullName = `${formatName(firstName)} ${otherNames ? formatName(otherNames) + ' ' : ''}${formatName(lastName)}`;
   const titleHeader = gender === 'MALE' ? 'MR.' : 'MS.';
   const titleBody = gender === 'MALE' ? 'Mr.' : 'Ms.';
   const pronounPossessive = gender === 'MALE' ? 'his' : 'her';
@@ -144,7 +144,7 @@ export const LetterPage = ({ student }: { student: Student }) => {
         </Text>
 
         <Text style={styles.bodyText}>
-          Yours Sincerely,
+          Yours sincerely,
         </Text>
 
         {/* Signature */}
