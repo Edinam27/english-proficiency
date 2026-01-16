@@ -118,13 +118,13 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       </View>
 
       <View style={styles.addresseeSection}>
-        <Text>{addressee}</Text>
+        <Text>{toTitleCase(addressee || '')}</Text>
       </View>
 
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>
 
       <Text style={styles.title}>
-        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName.toUpperCase()} (ID:{'\u00A0'}{indexNumber})
+        LETTER OF INTRODUCTION IN RESPECT OF{'\n'}{titleHeader} {fullName.toUpperCase()}{'\n'}(ID:{'\u00A0'}{indexNumber})
       </Text>
 
       <Text style={styles.bodyText}>
