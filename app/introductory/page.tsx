@@ -1,11 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { PROGRAMMES, getProgrammeDuration } from '@/lib/constants';
+
+const EMBASSY_ADDRESSES: Record<string, string> = {
+  'Germany': "The Consular Section\nEmbassy of Federal Republic of Germany\nGerman Visa and Immigration Home Office\nAccra-Ghana",
+  'UK': "The Consular Section\nBritish High Commission\nAccra-Ghana",
+  'USA': "The Consular Section\nEmbassy of the United States of America\nAccra-Ghana",
+  'Canada': "The Consular Section\nHigh Commission of Canada\nAccra-Ghana",
+  'China': "The Consular Section\nEmbassy of the People's Republic of China\nAccra-Ghana",
+};
+
+const COUNTRIES = ['Germany', 'UK', 'USA', 'Canada', 'China', 'Other'];
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -14,6 +24,7 @@ const formSchema = z.object({
   indexNumber: z.string().min(1, 'Index number is required'),
   gender: z.enum(['MALE', 'FEMALE']),
   programme: z.string().min(1, 'Programme is required'),
+  country: z.string().min(1, 'Country is required'),
   addressee: z.string().min(1, 'Address To is required'),
   admissionYear: z.string().min(1, 'Admission year is required'),
   currentLevel: z.string().min(1, 'Current level is required'),
@@ -34,17 +45,29 @@ export default function IntroductoryRequest() {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: {
       gender: 'MALE',
       programme: PROGRAMMES[0],
-      addressee: "THE CONSULAR SECTION\nEMBASSY OF UNITED KINGDOM\nUK Visa and Immigration\nHome Office\nACCRA-GHANA",
+      country: 'Germany', // Default to Germany as per request context
+      addressee: EMBASSY_ADDRESSES['Germany'],
     },
   });
 
+  const selectedCountry = watch('country');
   const selectedProgramme = watch('programme');
+
+  // Auto-populate addressee when country changes
+  useEffect(() => {
+    if (selectedCountry && EMBASSY_ADDRESSES[selectedCountry]) {
+      setValue('addressee', EMBASSY_ADDRESSES[selectedCountry]);
+    } else if (selectedCountry === 'Other') {
+      setValue('addressee', '');
+    }
+  }, [selectedCountry, setValue]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -154,6 +177,19 @@ export default function IntroductoryRequest() {
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
               </select>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+              <select
+                {...register('country')}
+                className="mt-1 block w-full rounded-md border-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 text-gray-900 bg-white"
+              >
+                {COUNTRIES.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              {errors.country && <p className="mt-1 text-sm text-red-600">{errors.country.message}</p>}
             </div>
 
             <div className="sm:col-span-2">

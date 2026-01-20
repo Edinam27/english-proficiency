@@ -27,6 +27,7 @@ model Student {
   admissionYear   String?
   currentLevel    String?
   purpose         String?
+  country         String?
   
   // Attestation Letter Fields
   graduationDate  String?

@@ -118,7 +118,7 @@ export const IntroductoryPage = ({ student }: { student: Student }) => {
       </View>
 
       <View style={styles.addresseeSection}>
-        <Text>{toTitleCase(addressee || '')}</Text>
+        <Text>{addressee || ''}</Text>
       </View>
 
       <Text style={{ fontFamily: 'Times-Roman', marginBottom: 10 }}>Dear Sir/Madam,</Text>

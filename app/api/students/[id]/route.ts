@@ -16,6 +16,7 @@ const updateSchema = z.object({
   admissionYear: z.string().optional(),
   currentLevel: z.string().optional(),
   purpose: z.string().optional(),
+  country: z.string().optional(),
   graduationDate: z.string().optional(),
   certificateNumber: z.string().optional(),
 });

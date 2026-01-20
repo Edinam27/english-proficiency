@@ -22,6 +22,7 @@ const studentSchema = z.object({
   admissionYear: z.string().optional(),
   currentLevel: z.string().optional(),
   purpose: z.string().optional(),
+  country: z.string().optional(),
   
   // Attestation fields
   graduationDate: z.string().optional(),

@@ -1,11 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Student } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { PROGRAMMES, SIGNATORIES, getProgrammeDuration } from '@/lib/constants';
+
+const EMBASSY_ADDRESSES: Record<string, string> = {
+  'Germany': "The Consular Section\nEmbassy of Federal Republic of Germany\nGerman Visa and Immigration Home Office\nAccra-Ghana",
+  'UK': "The Consular Section\nBritish High Commission\nAccra-Ghana",
+};
+
+const COUNTRIES = ['Germany', 'UK', 'USA', 'Canada', 'China', 'Other'];
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -14,6 +21,7 @@ const formSchema = z.object({
   programme: z.string().min(1, 'Programme is required'),
   addressee: z.string().min(1, 'Addressee is required'),
   signatory: z.string().min(1, 'Signatory is required'),
+  country: z.string().optional(),
   
   // Proficiency fields
   completionYear: z.string().optional(),
@@ -56,6 +64,7 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
       programme: student.programme,
       addressee: student.addressee || 'TO WHOM IT MAY CONCERN',
       signatory: student.signatory || 'DENIS_ATTUQUAYEFIO',
+      country: student.country || '',
       
       completionYear: student.completionYear || '',
       admissionYear: student.admissionYear || '',
@@ -69,6 +78,26 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
   });
 
   const selectedProgramme = watch('programme');
+  const selectedCountry = watch('country');
+  
+  // Track previous country to avoid overwriting address on initial render
+  const prevCountryRef = useRef(student.country || '');
+
+  useEffect(() => {
+    // Only auto-populate for INTRODUCTORY letters where the format is strict
+    const type = student.letterType || 'PROFICIENCY';
+    
+    if (type === 'INTRODUCTORY') {
+      if (selectedCountry !== prevCountryRef.current) {
+        if (selectedCountry && EMBASSY_ADDRESSES[selectedCountry]) {
+          setValue('addressee', EMBASSY_ADDRESSES[selectedCountry], { shouldDirty: true });
+        } else if (selectedCountry === 'Other') {
+          setValue('addressee', '', { shouldDirty: true });
+        }
+        prevCountryRef.current = selectedCountry || '';
+      }
+    }
+  }, [selectedCountry, setValue, student.letterType]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -207,6 +236,20 @@ export default function EditStudentModal({ student, isOpen, onClose, onSave }: E
             {/* Introductory Specific */}
             {letterType === 'INTRODUCTORY' && (
               <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Country</label>
+                  <select
+                    {...register('country')}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2"
+                  >
+                    <option value="">Select Country</option>
+                    {COUNTRIES.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Admission Year</label>
                   <input
